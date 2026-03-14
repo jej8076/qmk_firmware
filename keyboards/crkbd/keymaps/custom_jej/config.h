@@ -1,0 +1,6 @@
+#pragma once
+
+#define RGBLIGHT_DEFAULT_ON false
+#define OLED_TIMEOUT 60000
+#define COMBO_TERM 50
+#define SPLIT_TRANSACTION_IDS_USER USER_SYNC_MODE
