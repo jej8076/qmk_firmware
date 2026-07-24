@@ -17,3 +17,4 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 // Custom configuration
+#define COMBO_COUNT 16
