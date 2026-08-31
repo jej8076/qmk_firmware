@@ -17,4 +17,5 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 // Custom configuration
-#define COMBO_COUNT 16
+#define COMBO_COUNT 17
+#define DYNAMIC_KEYMAP_LAYER_COUNT 5

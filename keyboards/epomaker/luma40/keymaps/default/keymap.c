@@ -27,6 +27,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 const uint16_t PROGMEM combo_esc[] = {KC_TAB, KC_LCTL, COMBO_END};
 const uint16_t PROGMEM combo_esc2[] = {KC_H, KC_J, COMBO_END};
 const uint16_t PROGMEM combo_lclick[] = {KC_E, KC_R, COMBO_END};
+const uint16_t PROGMEM combo_rclick[] = {KC_W, KC_E, COMBO_END};
 const uint16_t PROGMEM combo_min[] = {KC_I, KC_O, COMBO_END};
 const uint16_t PROGMEM combo_equal[] = {KC_O, KC_P, COMBO_END};
 const uint16_t PROGMEM combo_backslash[] = {KC_P, KC_BSPC, COMBO_END};
@@ -45,6 +46,7 @@ combo_t key_combos[COMBO_COUNT] = {
     COMBO(combo_esc, KC_ESC),
     COMBO(combo_esc2, KC_ESC),
     COMBO(combo_lclick, MS_BTN1),
+    COMBO(combo_rclick, MS_BTN2),
     COMBO(combo_min, KC_MINS),
     COMBO(combo_equal, KC_EQL),
     COMBO(combo_backslash, KC_BSLS),
@@ -63,10 +65,10 @@ combo_t key_combos[COMBO_COUNT] = {
 // Implement conditional combo triggers to mirror ZMK's layers assignment
 bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode, keyrecord_t *record) {
     switch (combo_index) {
-        case 15: // combo_lclick_l3 (ZMK layers = <3>)
+        case 16: // combo_lclick_l3 (ZMK layers = <3>)
             return IS_LAYER_ON(3);
-        case 2: // combo_lclick (ZMK layers = <0>)
-            return (get_highest_layer(layer_state) == 0);
+        case 2: // combo_lclick (ZMK layers = <0> and <4>)
+            return (get_highest_layer(layer_state) == 0 || get_highest_layer(layer_state) == 4);
         default:
             return true;
     }
@@ -82,7 +84,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
             KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,  KC_RSFT,
         //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-             KC_NO,    KC_NO,   KC_NO,  KC_LALT, KC_LGUI,                                KC_SPC,  MO(1),   MO(2),  KC_F13,   KC_NO,   KC_NO
+             KC_NO,    KC_NO,   KC_NO,  KC_LALT, KC_LGUI,                                KC_SPC,  MO(1),   MO(2),  KC_LNG1,   KC_NO,   KC_NO
     ),
 
     [1] = LAYOUT_tkl_ansi(
@@ -104,18 +106,29 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
             KC_LSFT,  KC_F11,  KC_F12,   KC_NO,   KC_NO,   KC_NO,                          KC_NO,   KC_NO,    KC_1,    KC_2,    KC_3, KC_RSFT,
         //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-             KC_NO,    KC_NO,   KC_NO,  KC_LALT, KC_LGUI,                                KC_SPC,  KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO
+             KC_NO,    KC_NO,   KC_NO,  KC_LALT, KC_LGUI,                                KC_SPC,  KC_NO,   KC_NO,    KC_0,   KC_NO,   KC_NO
     ),
 
     [3] = LAYOUT_tkl_ansi(
         //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-             KC_TAB, MD_BLE1, MD_BLE2, MD_BLE3,  MD_24G, RM_TOGG,                         KC_NO,   KC_NO,   KC_NO,   MS_UP,   KC_NO,  KC_BSPC,
+             KC_TAB,   KC_NO,   DF(0),   KC_NO,   KC_NO, RM_TOGG,                         KC_NO,   KC_NO,   KC_NO,   MS_UP,   KC_NO,  KC_BSPC,
         //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
             KC_LCTL, RM_NEXT, RM_PREV, RM_VALU, RM_VALD, RM_SPDU,                       RM_SPDD,   KC_NO, MS_LEFT, MS_DOWN, MS_RGHT,  KC_ENT,
         //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-            KC_LSFT, RM_HUEU, RM_HUED, RM_SATU, RM_SATD,  EE_CLR,                         KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,  KC_RSFT,
+            KC_LSFT, MD_BLE1, MD_BLE2, MD_BLE3,  MD_24G,  EE_CLR,                         KC_NO,   DF(4),   KC_NO,   KC_NO,   KC_NO,  KC_RSFT,
         //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
              KC_NO,    KC_NO,   KC_NO,  KC_LALT, KC_LGUI,                                KC_SPC,  KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO
+    ),
+
+    [4] = LAYOUT_tkl_ansi(
+        //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+             KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  KC_BSPC,
+        //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+            KC_LCTL,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN,  KC_ENT,
+        //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+            KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,  KC_RSFT,
+        //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+             KC_NO,    KC_NO,   KC_NO,  KC_LALT, KC_LGUI,                                KC_SPC,  MO(1),   MO(2),  KC_F13,   KC_NO,   KC_NO
     )
 };
 // clang-format on
@@ -126,5 +139,6 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
   [1] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU), ENCODER_CCW_CW(KC_MPRV, KC_MNXT), ENCODER_CCW_CW(RM_VALD, RM_VALU), ENCODER_CCW_CW(KC_RGHT, KC_LEFT), },
   [2] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU), ENCODER_CCW_CW(KC_MPRV, KC_MNXT), ENCODER_CCW_CW(RM_VALD, RM_VALU), ENCODER_CCW_CW(KC_RGHT, KC_LEFT), },
   [3] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU), ENCODER_CCW_CW(KC_MPRV, KC_MNXT), ENCODER_CCW_CW(RM_VALD, RM_VALU), ENCODER_CCW_CW(KC_RGHT, KC_LEFT), },
+  [4] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU), ENCODER_CCW_CW(KC_MPRV, KC_MNXT), ENCODER_CCW_CW(RM_VALD, RM_VALU), ENCODER_CCW_CW(KC_RGHT, KC_LEFT), },
 };
 #endif
