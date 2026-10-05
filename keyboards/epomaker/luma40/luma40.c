@@ -84,10 +84,15 @@ void board_init(void) {
     kb_board_init();
 }
 
-void keyboard_post_init_user(void) {
+void keyboard_post_init_kb(void) {
     kb_keyboard_post_init();
+    keyboard_post_init_user();
 }
 
 bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
-    return kb_process_record_common(keycode, record);
+    if (!kb_process_record_common(keycode, record)) {
+        return false;
+    }
+    return process_record_user(keycode, record);
 }
+
