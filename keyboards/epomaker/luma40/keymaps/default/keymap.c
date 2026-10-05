@@ -147,9 +147,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [1] = LAYOUT_tkl_ansi(
         //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-            KC_GRV,  KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                         KC_NO,   KC_LBRC,   KC_UP, KC_RBRC,   KC_NO,  KC_BSPC,
+            KC_GRV,  KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                       MS_WHLU,   KC_LBRC,   KC_UP, KC_RBRC,   KC_NO,  KC_BSPC,
         //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-            KC_LCTL, KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                         KC_NO,   KC_LEFT, KC_DOWN, KC_RGHT,   KC_NO,  KC_ENT,
+            KC_LCTL, KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                       MS_WHLD,   KC_LEFT, KC_DOWN, KC_RGHT,   KC_NO,  KC_ENT,
         //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
             KC_LSFT, KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                         KC_NO,     KC_NO,   KC_NO,   KC_NO,   KC_NO,  KC_RSFT,
         //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
